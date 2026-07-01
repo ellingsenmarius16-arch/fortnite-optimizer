@@ -48,7 +48,7 @@ $form.ForeColor = [System.Drawing.Color]::White
 
 # Logo Label
 $logoLabel = New-Object System.Windows.Forms.Label
-$logoLabel.Text = "⚡ FORTNITE OPTIMIZER PRO"
+$logoLabel.Text = "[*] FORTNITE OPTIMIZER PRO"
 $logoLabel.Font = New-Object System.Drawing.Font("Arial", 16, [System.Drawing.FontStyle]::Bold)
 $logoLabel.ForeColor = [System.Drawing.Color]::Cyan
 $logoLabel.Location = New-Object System.Drawing.Point(20, 20)
@@ -71,7 +71,7 @@ $licenseBox.ForeColor = [System.Drawing.Color]::White
 $form.Controls.Add($licenseBox)
 
 $validateBtn = New-Object System.Windows.Forms.Button
-$validateBtn.Text = "✓ Validate"
+$validateBtn.Text = "[OK] Validate"
 $validateBtn.Location = New-Object System.Drawing.Point(330, 95)
 $validateBtn.Size = New-Object System.Drawing.Size(100, 25)
 $validateBtn.BackColor = [System.Drawing.Color]::Green
@@ -80,7 +80,7 @@ $form.Controls.Add($validateBtn)
 
 # Status Label
 $statusLabel = New-Object System.Windows.Forms.Label
-$statusLabel.Text = "❌ No License Validated"
+$statusLabel.Text = "[X] No License Validated"
 $statusLabel.Location = New-Object System.Drawing.Point(20, 130)
 $statusLabel.Size = New-Object System.Drawing.Size(300, 20)
 $statusLabel.ForeColor = [System.Drawing.Color]::Red
@@ -88,7 +88,7 @@ $form.Controls.Add($statusLabel)
 
 # Tweaks GroupBox
 $tweaksGroup = New-Object System.Windows.Forms.GroupBox
-$tweaksGroup.Text = "🎮 Optimization Tweaks"
+$tweaksGroup.Text = "[TWEAKS] Optimization Options"
 $tweaksGroup.Location = New-Object System.Drawing.Point(20, 165)
 $tweaksGroup.Size = New-Object System.Drawing.Size(850, 480)
 $tweaksGroup.ForeColor = [System.Drawing.Color]::Cyan
@@ -135,7 +135,7 @@ foreach ($tweak in $tweaks) {
 
 # Apply Button
 $applyBtn = New-Object System.Windows.Forms.Button
-$applyBtn.Text = "▶ APPLY TWEAKS"
+$applyBtn.Text = "[>] APPLY TWEAKS"
 $applyBtn.Location = New-Object System.Drawing.Point(20, 660)
 $applyBtn.Size = New-Object System.Drawing.Size(200, 30)
 $applyBtn.Font = New-Object System.Drawing.Font("Arial", 11, [System.Drawing.FontStyle]::Bold)
@@ -145,7 +145,7 @@ $form.Controls.Add($applyBtn)
 
 # Admin Button
 $adminBtn = New-Object System.Windows.Forms.Button
-$adminBtn.Text = "🔐 Admin Panel"
+$adminBtn.Text = "[#] Admin Panel"
 $adminBtn.Location = New-Object System.Drawing.Point(230, 660)
 $adminBtn.Size = New-Object System.Drawing.Size(150, 30)
 $adminBtn.BackColor = [System.Drawing.Color]::FromArgb(100, 50, 150)
@@ -154,7 +154,7 @@ $form.Controls.Add($adminBtn)
 
 # Exit Button
 $exitBtn = New-Object System.Windows.Forms.Button
-$exitBtn.Text = "✕ Exit"
+$exitBtn.Text = "[X] Exit"
 $exitBtn.Location = New-Object System.Drawing.Point(800, 660)
 $exitBtn.Size = New-Object System.Drawing.Size(70, 30)
 $exitBtn.BackColor = [System.Drawing.Color]::Red
@@ -171,11 +171,11 @@ $validateBtn.Add_Click({
     }
     
     if (Validate-LicenseKey $key) {
-        $statusLabel.Text = "✅ License Valid!"
+        $statusLabel.Text = "[OK] License Valid!"
         $statusLabel.ForeColor = [System.Drawing.Color]::Lime
         $applyBtn.Enabled = $true
     } else {
-        $statusLabel.Text = "❌ Invalid License Key"
+        $statusLabel.Text = "[X] Invalid License Key"
         $statusLabel.ForeColor = [System.Drawing.Color]::Red
         $applyBtn.Enabled = $false
     }
@@ -256,11 +256,12 @@ $adminBtn.Add_Click({
     $adminContent.Location = New-Object System.Drawing.Point(20, 80)
     $adminContent.Size = New-Object System.Drawing.Size(550, 280)
     $adminContent.Visible = $false
+    $adminContent.BackColor = [System.Drawing.Color]::FromArgb(30, 30, 35)
     $adminForm.Controls.Add($adminContent)
     
     # Generate Key Section
     $genLabel = New-Object System.Windows.Forms.Label
-    $genLabel.Text = "🔑 Generate New License Key"
+    $genLabel.Text = "[KEY] Generate New License Key"
     $genLabel.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Bold)
     $genLabel.Location = New-Object System.Drawing.Point(0, 10)
     $genLabel.Size = New-Object System.Drawing.Size(550, 25)
@@ -271,6 +272,7 @@ $adminBtn.Add_Click({
     $expiryLabel.Text = "Expiry Date (YYYY-MM-DD):"
     $expiryLabel.Location = New-Object System.Drawing.Point(0, 45)
     $expiryLabel.Size = New-Object System.Drawing.Size(200, 20)
+    $expiryLabel.ForeColor = [System.Drawing.Color]::White
     $adminContent.Controls.Add($expiryLabel)
     
     $expiryBox = New-Object System.Windows.Forms.TextBox
