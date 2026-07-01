@@ -1,7 +1,6 @@
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
-# License Key Database (In Real Version: Use Server/Database)
 $licenseKeyFile = "$env:APPDATA\FortOptimizer\licenses.txt"
 $configFolder = "$env:APPDATA\FortOptimizer"
 
@@ -9,16 +8,12 @@ if (-not (Test-Path $configFolder)) {
     New-Item -ItemType Directory -Path $configFolder -Force | Out-Null
 }
 
-# Initialize License File
 if (-not (Test-Path $licenseKeyFile)) {
     @"
-# Fortnite Optimizer License Keys
-# Format: KEY|EXPIRY|STATUS
 DEMO-KEY-2024-TRIAL|2026-12-31|ACTIVE
 "@ | Out-File -FilePath $licenseKeyFile -Force
 }
 
-# ============ LICENSE VALIDATION ============
 function Validate-LicenseKey {
     param([string]$key)
     
@@ -37,7 +32,6 @@ function Validate-LicenseKey {
     return $false
 }
 
-# ============ MAIN FORM ============
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "Fortnite Optimizer Pro - v3.0"
 $form.Width = 900
@@ -46,16 +40,14 @@ $form.StartPosition = "CenterScreen"
 $form.BackColor = [System.Drawing.Color]::FromArgb(30, 30, 35)
 $form.ForeColor = [System.Drawing.Color]::White
 
-# Logo Label
 $logoLabel = New-Object System.Windows.Forms.Label
-$logoLabel.Text = "[*] FORTNITE OPTIMIZER PRO"
+$logoLabel.Text = "FORTNITE OPTIMIZER PRO"
 $logoLabel.Font = New-Object System.Drawing.Font("Arial", 16, [System.Drawing.FontStyle]::Bold)
 $logoLabel.ForeColor = [System.Drawing.Color]::Cyan
 $logoLabel.Location = New-Object System.Drawing.Point(20, 20)
 $logoLabel.Size = New-Object System.Drawing.Size(400, 30)
 $form.Controls.Add($logoLabel)
 
-# License Key Input
 $licenseLabel = New-Object System.Windows.Forms.Label
 $licenseLabel.Text = "Enter License Key:"
 $licenseLabel.Location = New-Object System.Drawing.Point(20, 70)
@@ -71,38 +63,35 @@ $licenseBox.ForeColor = [System.Drawing.Color]::White
 $form.Controls.Add($licenseBox)
 
 $validateBtn = New-Object System.Windows.Forms.Button
-$validateBtn.Text = "[OK] Validate"
+$validateBtn.Text = "Validate"
 $validateBtn.Location = New-Object System.Drawing.Point(330, 95)
 $validateBtn.Size = New-Object System.Drawing.Size(100, 25)
 $validateBtn.BackColor = [System.Drawing.Color]::Green
 $validateBtn.ForeColor = [System.Drawing.Color]::White
 $form.Controls.Add($validateBtn)
 
-# Status Label
 $statusLabel = New-Object System.Windows.Forms.Label
-$statusLabel.Text = "[X] No License Validated"
+$statusLabel.Text = "No License Validated"
 $statusLabel.Location = New-Object System.Drawing.Point(20, 130)
 $statusLabel.Size = New-Object System.Drawing.Size(300, 20)
 $statusLabel.ForeColor = [System.Drawing.Color]::Red
 $form.Controls.Add($statusLabel)
 
-# Tweaks GroupBox
 $tweaksGroup = New-Object System.Windows.Forms.GroupBox
-$tweaksGroup.Text = "[TWEAKS] Optimization Options"
+$tweaksGroup.Text = "Optimization Tweaks"
 $tweaksGroup.Location = New-Object System.Drawing.Point(20, 165)
 $tweaksGroup.Size = New-Object System.Drawing.Size(850, 480)
 $tweaksGroup.ForeColor = [System.Drawing.Color]::Cyan
 $tweaksGroup.BackColor = [System.Drawing.Color]::FromArgb(30, 30, 35)
 $form.Controls.Add($tweaksGroup)
 
-# Define Tweaks
 $tweaks = @(
     @{ Name = "Memory Optimization"; Desc = "Disable NTFS Last Access, Superfetch"; Enabled = $false },
     @{ Name = "Network Optimization"; Desc = "Reduce ping, optimize TCP/DNS"; Enabled = $false },
     @{ Name = "Disable Windows Search"; Desc = "Stop indexing service"; Enabled = $false },
     @{ Name = "GPU Acceleration"; Desc = "Enable hardware GPU scheduling"; Enabled = $false },
     @{ Name = "CPU Priority Boost"; Desc = "Maximize gaming CPU priority"; Enabled = $false },
-    @{ Name = "Raw Input (Mouse)"; Desc = "Disable acceleration, 1:1 raw input"; Enabled = $false },
+    @{ Name = "Raw Input Mouse"; Desc = "Disable acceleration, 1:1 raw input"; Enabled = $false },
     @{ Name = "Visual Effects Off"; Desc = "Disable animations and effects"; Enabled = $false },
     @{ Name = "Kill Bloatware"; Desc = "Terminate OneDrive, Teams, Chrome"; Enabled = $false },
     @{ Name = "DNS Flush"; Desc = "Clear DNS cache"; Enabled = $false },
@@ -133,9 +122,8 @@ foreach ($tweak in $tweaks) {
     $y += 35
 }
 
-# Apply Button
 $applyBtn = New-Object System.Windows.Forms.Button
-$applyBtn.Text = "[>] APPLY TWEAKS"
+$applyBtn.Text = "APPLY TWEAKS"
 $applyBtn.Location = New-Object System.Drawing.Point(20, 660)
 $applyBtn.Size = New-Object System.Drawing.Size(200, 30)
 $applyBtn.Font = New-Object System.Drawing.Font("Arial", 11, [System.Drawing.FontStyle]::Bold)
@@ -143,25 +131,21 @@ $applyBtn.BackColor = [System.Drawing.Color]::Lime
 $applyBtn.ForeColor = [System.Drawing.Color]::Black
 $form.Controls.Add($applyBtn)
 
-# Admin Button
 $adminBtn = New-Object System.Windows.Forms.Button
-$adminBtn.Text = "[#] Admin Panel"
+$adminBtn.Text = "Admin Panel"
 $adminBtn.Location = New-Object System.Drawing.Point(230, 660)
 $adminBtn.Size = New-Object System.Drawing.Size(150, 30)
 $adminBtn.BackColor = [System.Drawing.Color]::FromArgb(100, 50, 150)
 $adminBtn.ForeColor = [System.Drawing.Color]::White
 $form.Controls.Add($adminBtn)
 
-# Exit Button
 $exitBtn = New-Object System.Windows.Forms.Button
-$exitBtn.Text = "[X] Exit"
+$exitBtn.Text = "Exit"
 $exitBtn.Location = New-Object System.Drawing.Point(800, 660)
 $exitBtn.Size = New-Object System.Drawing.Size(70, 30)
 $exitBtn.BackColor = [System.Drawing.Color]::Red
 $exitBtn.ForeColor = [System.Drawing.Color]::White
 $form.Controls.Add($exitBtn)
-
-# ============ EVENT HANDLERS ============
 
 $validateBtn.Add_Click({
     $key = $licenseBox.Text.Trim()
@@ -171,11 +155,11 @@ $validateBtn.Add_Click({
     }
     
     if (Validate-LicenseKey $key) {
-        $statusLabel.Text = "[OK] License Valid!"
+        $statusLabel.Text = "License Valid!"
         $statusLabel.ForeColor = [System.Drawing.Color]::Lime
         $applyBtn.Enabled = $true
     } else {
-        $statusLabel.Text = "[X] Invalid License Key"
+        $statusLabel.Text = "Invalid License Key"
         $statusLabel.ForeColor = [System.Drawing.Color]::Red
         $applyBtn.Enabled = $false
     }
@@ -209,7 +193,6 @@ $applyBtn.Add_Click({
             "Information"
         )
         
-        # Simulate tweak application (real version would run reg edits)
         foreach ($checkbox in $selected) {
             Write-Host "Applying: $($checkbox.Text)" -ForegroundColor Green
         }
@@ -220,7 +203,6 @@ $applyBtn.Add_Click({
 })
 
 $adminBtn.Add_Click({
-    # ============ ADMIN FORM ============
     $adminForm = New-Object System.Windows.Forms.Form
     $adminForm.Text = "Admin Panel - License Key Generator"
     $adminForm.Width = 600
@@ -229,7 +211,6 @@ $adminBtn.Add_Click({
     $adminForm.BackColor = [System.Drawing.Color]::FromArgb(30, 30, 35)
     $adminForm.ForeColor = [System.Drawing.Color]::White
     
-    # Password Check
     $passLabel = New-Object System.Windows.Forms.Label
     $passLabel.Text = "Admin Password:"
     $passLabel.Location = New-Object System.Drawing.Point(20, 20)
@@ -259,9 +240,8 @@ $adminBtn.Add_Click({
     $adminContent.BackColor = [System.Drawing.Color]::FromArgb(30, 30, 35)
     $adminForm.Controls.Add($adminContent)
     
-    # Generate Key Section
     $genLabel = New-Object System.Windows.Forms.Label
-    $genLabel.Text = "[KEY] Generate New License Key"
+    $genLabel.Text = "Generate New License Key"
     $genLabel.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Bold)
     $genLabel.Location = New-Object System.Drawing.Point(0, 10)
     $genLabel.Size = New-Object System.Drawing.Size(550, 25)
